@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sample A · Noir Swiss</title>
+<style>
+  :root {
+    --bg: #0B0B0C;
+    --ink: #EDE8DF;
+    --ink-dim: #8F8B83;
+    --accent: #FF3B2F;
+    --hairline: rgba(237,232,223,0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+  }
+  /* 12-col grid ghost */
+  .gridlines {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: repeating-linear-gradient(to right,
+      transparent 0, transparent calc(100%/12 - 1px),
+      rgba(237,232,223,0.045) calc(100%/12 - 1px), rgba(237,232,223,0.045) calc(100%/12));
+  }
+  .slide {
+    position: absolute; inset: 0; padding: 6vh 6vw;
+    visibility: hidden; z-index: 1;
+  }
+  .slide.active { visibility: visible; }
+
+  .eyebrow {
+    font-size: 0.72vw; letter-spacing: 0.42em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .rule { height: 1px; background: var(--hairline); transform-origin: left center; }
+  .rule.strong { background: var(--ink); }
+  .mask { overflow: hidden; }
+  .mask > * { display: block; }
+  .cross { position: absolute; color: var(--ink-dim); font-size: 1vw; font-weight: 300; }
+
+  /* ---- Slide 1 · Title ---- */
+  #s0 .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2vh; }
+  #s0 .rule-top { margin-bottom: 8vh; }
+  #s0 h1 {
+    font-size: 11.5vw; line-height: 0.92; font-weight: 700;
+    letter-spacing: -0.035em; text-transform: uppercase;
+  }
+  #s0 h1 .slop { color: var(--accent); }
+  #s0 .sub {
+    margin-top: 6vh; font-size: 1.05vw; color: var(--ink-dim);
+    max-width: 30ch; line-height: 1.5;
+  }
+  #s0 .foot {
+    position: absolute; bottom: 6vh; left: 6vw; right: 6vw;
+    display: flex; justify-content: space-between;
+    font-size: 0.72vw; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-dim);
+  }
+
+  /* ---- Slide 2 · Chapter card ---- */
+  #s1 { display: grid; grid-template-columns: 5fr 7fr; gap: 4vw; align-items: center; }
+  #s1 .num {
+    font-size: 22vw; font-weight: 700; letter-spacing: -0.05em;
+    color: var(--accent); line-height: 1;
+  }
+  #s1 .vrule { position: absolute; left: 42vw; top: 20vh; bottom: 20vh; width: 1px;
+    background: var(--hairline); transform-origin: center top; }
+  #s1 .right .eyebrow { margin-bottom: 3vh; }
+  #s1 h2 { font-size: 6.2vw; line-height: 0.95; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; }
+  #s1 .one-liner { margin-top: 4vh; font-size: 1.15vw; color: var(--ink-dim); }
+  #s1 .cursor {
+    display: inline-block; width: 0.9vw; height: 2.1vw; background: var(--ink);
+    margin-left: 0.6vw; vertical-align: text-bottom;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ---- Slide 3 · System of signals ---- */
+  #s2 { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  #s2 .board { position: relative; width: 44vw; padding: 3.2vw; }
+  #s2 .frame { position: absolute; background: var(--hairline); }
+  #s2 .frame.t { top: 0; left: 0; right: 0; height: 1px; transform-origin: left center; }
+  #s2 .frame.b { bottom: 0; left: 0; right: 0; height: 1px; transform-origin: right center; }
+  #s2 .frame.l { top: 0; bottom: 0; left: 0; width: 1px; transform-origin: center top; }
+  #s2 .frame.r { top: 0; bottom: 0; right: 0; width: 1px; transform-origin: center bottom; }
+  #s2 .grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4vw;
+    justify-items: center; align-items: center;
+  }
+  #s2 .sig { width: 5vw; height: 5vw; display: flex; align-items: center; justify-content: center; }
+  .sig .sq  { width: 100%; height: 100%; background: var(--ink); }
+  .sig .sq.accent { background: var(--accent); }
+  .sig .dot { width: 100%; height: 100%; border-radius: 50%; background: var(--ink); }
+  .sig .ring { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--ink); }
+  .sig .bar { width: 100%; height: 14%; background: var(--ink); }
+  .sig .half { width: 100%; height: 100%; background: var(--ink); clip-path: polygon(0 0, 100% 100%, 0 100%); }
+  .sig .glyph { font-size: 4.6vw; font-weight: 700; line-height: 1; }
+  .sig .glyph.dim { color: var(--ink-dim); }
+  #s2 .caption { margin-top: 6vh; text-align: center; }
+  #s2 .caption h2 { font-size: 3vw; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
+  #s2 .caption p { margin-top: 1.2vh; font-size: 1vw; color: var(--ink-dim); }
+
+  .navhint {
+    position: fixed; bottom: 2vh; right: 2vw; z-index: 2;
+    font-size: 0.7vw; letter-spacing: 0.3em; color: var(--ink-dim);
+  }
+
+  /* ---- Print / PDF mode: final states, stacked pages, no JS needed ---- */
+  @page { size: 1280px 720px; margin: 0; }
+  body.print { overflow: visible; }
+  body.print .slide {
+    position: relative; visibility: visible;
+    width: 100vw; height: 100vh; page-break-after: always; break-after: page;
+  }
+  body.print .navhint { display: none; }
+  body.print #s1 .cursor { animation: none; }
+</style>
+</head>
+<body>
+<div class="gridlines"></div>
+
+<!-- S0 · TITLE -->
+<section class="slide" id="s0">
+  <div class="head">
+    <span class="eyebrow anim-fade">An online masterclass</span>
+    <span class="eyebrow anim-fade">Laura Rosa × Ivan</span>
+  </div>
+  <div class="rule rule-top anim-rule"></div>
+  <h1>
+    <span class="mask"><span class="anim-rise">Brand,</span></span>
+    <span class="mask"><span class="anim-rise">not <span class="slop">slop</span></span></span>
+  </h1>
+  <p class="sub anim-fade">A brand identity from scratch, with AI, for about zero euros.</p>
+  <div class="foot">
+    <span class="anim-fade">2026 · Online</span>
+    <span class="anim-fade">Rules, not vibes</span>
+  </div>
+  <span class="cross anim-fade" style="top:4vh; right:4vw;">+</span>
+  <span class="cross anim-fade" style="bottom:4vh; left:4vw;">+</span>
+</section>
+
+<!-- S1 · CHAPTER CARD -->
+<section class="slide" id="s1">
+  <div class="num-wrap"><div class="num anim-wipe">01</div></div>
+  <div class="vrule anim-vrule"></div>
+  <div class="right">
+    <div class="eyebrow anim-fade">Act one · live demo</div>
+    <h2>
+      <span class="mask"><span class="anim-rise">The usual</span></span>
+      <span class="mask"><span class="anim-rise">way.</span></span>
+    </h2>
+    <p class="one-liner anim-fade">One prompt, zero rules, first answer accepted.<span class="cursor"></span></p>
+  </div>
+</section>
+
+<!-- S2 · SYSTEM OF SIGNALS -->
+<section class="slide" id="s2">
+  <div class="board">
+    <div class="frame t anim-frame"></div>
+    <div class="frame r anim-frame"></div>
+    <div class="frame b anim-frame"></div>
+    <div class="frame l anim-frame"></div>
+    <div class="grid">
+      <div class="sig"><div class="sq accent"></div></div>
+      <div class="sig"><div class="glyph">Aa</div></div>
+      <div class="sig"><div class="dot"></div></div>
+      <div class="sig"><div class="bar"></div></div>
+      <div class="sig"><div class="ring"></div></div>
+      <div class="sig"><div class="sq"></div></div>
+      <div class="sig"><div class="glyph dim">&amp;</div></div>
+      <div class="sig"><div class="half"></div></div>
+    </div>
+  </div>
+  <div class="caption">
+    <h2><span class="mask" style="display:block"><span class="anim-rise">A brand is a system of signals</span></span></h2>
+    <p class="anim-fade">Alone they are noise. Arranged, they are recognizable.</p>
+  </div>
+</section>
+
+<div class="navhint">← → · Noir Swiss</div>
+
+<script src="vendor/anime.umd.min.js"></script>
+<script>
+const { animate, createTimeline, stagger, utils } = anime;
+const EASE = 'inOutQuint';
+const slides = [...document.querySelectorAll('.slide')];
+const PRINT = new URLSearchParams(location.search).has('print');
+
+// Deterministic scatter offsets for the signal grid (from-states)
+const SCATTER = [
+  { x: -220, y: -140, r: -28 }, { x: 180, y: -190, r: 40 },
+  { x: -320, y:   60, r:  18 }, { x: 260, y:  120, r: -35 },
+  { x: -140, y:  200, r:  50 }, { x: 330, y:  -60, r:  12 },
+  { x:  -60, y: -240, r: -45 }, { x: 120, y:  230, r:  25 },
+];
+
+const slideTls = new Map();
+const STAGED = '.anim-rise,.anim-fade,.anim-rule,.anim-vrule,.anim-wipe,.anim-frame,.sig,.anim-slide-r,.anim-slide-l,.anim-num,.anim-word';
+function revertTl(el) {
+  const t = slideTls.get(el);
+  if (t) { t.revert(); slideTls.delete(el); }
+  // clear staged from-states too: CSS final state must win when not animating
+  el.querySelectorAll(STAGED).forEach(n => {
+    n.style.removeProperty('transform');
+    n.style.removeProperty('opacity');
+    n.style.removeProperty('clip-path');
+  });
+}
+
+function playSlide(i) {
+  const s = slides[i];
+  revertTl(s);
+  const tl = createTimeline({ defaults: { ease: EASE, duration: 800 } });
+  slideTls.set(s, tl);
+
+  // shared primitives: set from-states, animate to CSS-defined final states
+  const rises = s.querySelectorAll('.anim-rise');
+  const fades = s.querySelectorAll('.anim-fade');
+  if (rises.length) {
+    utils.set(rises, { y: '110%' });
+    tl.add(rises, { y: '0%', duration: 900, delay: stagger(110) }, 0);
+  }
+  s.querySelectorAll('.anim-rule').forEach(el => {
+    utils.set(el, { scaleX: 0 });
+    tl.add(el, { scaleX: 1, duration: 1000 }, 100);
+  });
+  s.querySelectorAll('.anim-vrule').forEach(el => {
+    utils.set(el, { scaleY: 0 });
+    tl.add(el, { scaleY: 1, duration: 900 }, 150);
+  });
+  s.querySelectorAll('.anim-wipe').forEach(el => {
+    utils.set(el, { clipPath: 'inset(0 100% 0 0)' });
+    tl.add(el, { clipPath: 'inset(0 0% 0 0)', duration: 1100 }, 0);
+  });
+  if (i === 2) {
+    const sigs = s.querySelectorAll('.sig');
+    sigs.forEach((el, k) => {
+      const o = SCATTER[k % SCATTER.length];
+      utils.set(el, { x: o.x, y: o.y, rotate: o.r, opacity: 0.55 });
+    });
+    tl.add(sigs, { x: 0, y: 0, rotate: 0, opacity: 1, duration: 1200, delay: stagger(60, { from: 'center' }) }, 200);
+    const frames = s.querySelectorAll('.anim-frame');
+    utils.set(frames, el => el.classList.contains('t') || el.classList.contains('b') ? { scaleX: 0 } : { scaleY: 0 });
+    frames.forEach(f => tl.add(f, (f.classList.contains('t') || f.classList.contains('b'))
+      ? { scaleX: 1, duration: 700 } : { scaleY: 1, duration: 700 }, 1100));
+  }
+  if (fades.length) {
+    utils.set(fades, { opacity: 0 });
+    tl.add(fades, { opacity: 1, duration: 700, delay: stagger(90) }, i === 2 ? 1400 : 500);
+  }
+}
+
+let cur = -1;
+function show(i, dir = 1) {
+  if (i < 0 || i >= slides.length || i === cur) return;
+  const prev = cur; cur = i;
+  const nxt = slides[i];
+  const out = prev >= 0 ? slides[prev] : null;
+  utils.remove(slides); // cancel any in-flight slide transition
+  slides.forEach(s => {
+    if (s !== nxt && s !== out) { s.classList.remove('active'); utils.set(s, { x: 0, opacity: 1 }); revertTl(s); }
+  });
+  nxt.classList.add('active');
+  if (out) {
+    animate(out, { x: -40 * dir, opacity: 0, duration: 380, ease: 'inOutQuart',
+      onComplete: () => { out.classList.remove('active'); utils.set(out, { x: 0, opacity: 1 }); revertTl(out); } });
+    utils.set(nxt, { x: 60 * dir, opacity: 0 });
+    animate(nxt, { x: 0, opacity: 1, duration: 440, ease: 'inOutQuart' });
+  }
+  history.replaceState(null, '', '#' + i);
+  if (dir > 0 || !out) playSlide(i);  // entrance choreography only plays moving forward
+  else revertTl(nxt);                 // going back lands on the finished slide, no replay
+}
+
+if (PRINT) {
+  document.body.classList.add('print');
+  slides.forEach(s => s.classList.add('active'));
+} else {
+  addEventListener('keydown', e => {
+    if (e.repeat) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') show(cur + 1, 1);
+    if (e.key === 'ArrowLeft') show(cur - 1, -1);
+  });
+  show(Math.min(Math.max(parseInt(location.hash.slice(1)) || 0, 0), slides.length - 1));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sample C · Kinetic Editorial</title>
+<style>
+  :root {
+    --bg: #F5F0E6;
+    --ink: #14120F;
+    --ink-dim: #8B857A;
+    --accent: #2431FF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+  }
+  .serif { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; }
+  .black { font-family: "Arial Black", "Helvetica Neue", sans-serif; font-weight: 900; }
+  .slide { position: absolute; inset: 0; padding: 6vh 6vw; visibility: hidden; z-index: 1; overflow: hidden; }
+  .slide.active { visibility: visible; }
+  .mask { overflow: hidden; }
+  .mask > * { display: block; }
+  .meta { font-size: 0.75vw; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-dim); }
+
+  /* ---- Slide 1 · Title ---- */
+  #s0 { display: flex; flex-direction: column; justify-content: center; }
+  #s0 .brand { font-size: 15vw; line-height: 0.8; letter-spacing: -0.04em; }
+  #s0 .not { font-size: 3.2vw; margin: 1.5vh 0 0.5vh 22vw; color: var(--accent); }
+  #s0 .slop { font-size: 16vw; line-height: 0.85; text-transform: uppercase; letter-spacing: -0.02em; margin-left: 10vw; }
+  #s0 .meta-row { position: absolute; bottom: 6vh; left: 6vw; right: 6vw; display: flex; justify-content: space-between; }
+  #s0 .tagline { position: absolute; top: 8vh; right: 6vw; font-size: 1vw; color: var(--ink-dim); max-width: 22ch; text-align: right; line-height: 1.5; }
+
+  /* ---- Slide 2 · Chapter ---- */
+  #s1 .bignum {
+    position: absolute; right: -8vw; bottom: -18vh;
+    font-size: 52vw; line-height: 0.8; color: var(--accent); opacity: 0.92;
+    letter-spacing: -0.06em;
+  }
+  #s1 .stack { position: relative; z-index: 1; margin-top: 16vh; }
+  #s1 .the { font-size: 4vw; }
+  #s1 .usual { font-size: 12vw; line-height: 0.9; text-transform: uppercase; letter-spacing: -0.03em; }
+  #s1 .way { font-size: 9vw; line-height: 0.9; margin-left: 14vw; }
+  #s1 .one-liner { margin-top: 5vh; font-size: 1.1vw; color: var(--ink-dim); }
+
+  /* ---- Slide 3 · Signals (words as the visual) ---- */
+  #s2 { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  #s2 .words { text-align: center; }
+  #s2 .w { display: block; line-height: 1.02; }
+  #s2 .w1 { font-size: 6vw; }
+  #s2 .w2 { font-size: 6vw; text-transform: uppercase; }
+  #s2 .w3 { font-size: 6vw; color: var(--accent); }
+  #s2 .w4 { font-size: 6vw; text-transform: uppercase; letter-spacing: 0.35em; }
+  #s2 .w5 { font-size: 6vw; }
+  #s2 .caption { margin-top: 6vh; text-align: center; font-size: 1vw; color: var(--ink-dim); }
+
+  .navhint { position: fixed; bottom: 2vh; right: 2vw; z-index: 2; font-size: 0.7vw; letter-spacing: 0.3em; color: var(--ink-dim); }
+
+  @page { size: 1280px 720px; margin: 0; }
+  body.print { overflow: visible; }
+  body.print .slide { position: relative; visibility: visible; width: 100vw; height: 100vh; page-break-after: always; break-after: page; }
+  body.print .navhint { display: none; }
+</style>
+</head>
+<body>
+
+<!-- S0 · TITLE -->
+<section class="slide" id="s0">
+  <p class="tagline anim-fade">A brand identity from scratch, with AI, for about zero euros.</p>
+  <div class="mask"><div class="brand serif anim-slide-r">brand,</div></div>
+  <div class="mask"><div class="not serif anim-fade">not</div></div>
+  <div class="mask"><div class="slop black anim-slide-l">Slop</div></div>
+  <div class="meta-row">
+    <span class="meta anim-fade">An online masterclass</span>
+    <span class="meta anim-fade">Laura Rosa × Ivan</span>
+  </div>
+</section>
+
+<!-- S1 · CHAPTER -->
+<section class="slide" id="s1">
+  <div class="bignum black anim-num">01</div>
+  <div class="stack">
+    <div class="mask"><div class="the serif anim-slide-r">act one —</div></div>
+    <div class="mask"><div class="usual black anim-slide-l">The usual</div></div>
+    <div class="mask"><div class="way serif anim-slide-r">way.</div></div>
+    <p class="one-liner anim-fade">One prompt, zero rules, first answer accepted.</p>
+  </div>
+</section>
+
+<!-- S2 · SIGNALS -->
+<section class="slide" id="s2">
+  <div class="words">
+    <span class="w w1 serif anim-word">color</span>
+    <span class="w w2 black anim-word">Type</span>
+    <span class="w w3 serif anim-word">shape</span>
+    <span class="w w4 anim-word">RHYTHM</span>
+    <span class="w w5 serif anim-word">space</span>
+  </div>
+  <p class="caption anim-fade">Five signals. One system. A brand is what they agree on.</p>
+</section>
+
+<div class="navhint">← → · Kinetic Editorial</div>
+
+<script src="vendor/anime.umd.min.js"></script>
+<script>
+const { animate, createTimeline, stagger, utils } = anime;
+const slides = [...document.querySelectorAll('.slide')];
+const PRINT = new URLSearchParams(location.search).has('print');
+
+const WORD_SCATTER = [
+  { x: -260, y:  -60, r: -12 }, { x: 240, y: -120, r: 8 },
+  { x: -180, y:  100, r:  15 }, { x: 300, y:   60, r: -9 },
+  { x:  -80, y: -180, r:   6 },
+];
+
+const slideTls = new Map();
+const STAGED = '.anim-rise,.anim-fade,.anim-rule,.anim-vrule,.anim-wipe,.anim-frame,.sig,.anim-slide-r,.anim-slide-l,.anim-num,.anim-word';
+function revertTl(el) {
+  const t = slideTls.get(el);
+  if (t) { t.revert(); slideTls.delete(el); }
+  // clear staged from-states too: CSS final state must win when not animating
+  el.querySelectorAll(STAGED).forEach(n => {
+    n.style.removeProperty('transform');
+    n.style.removeProperty('opacity');
+    n.style.removeProperty('clip-path');
+  });
+}
+
+function playSlide(i) {
+  const s = slides[i];
+  revertTl(s);
+  const tl = createTimeline({ defaults: { ease: 'inOutQuint', duration: 900 } });
+  slideTls.set(s, tl);
+
+  s.querySelectorAll('.anim-slide-r').forEach((el, k) => {
+    utils.set(el, { x: '-108%' });
+    tl.add(el, { x: '0%', duration: 1000 }, k * 140);
+  });
+  s.querySelectorAll('.anim-slide-l').forEach((el, k) => {
+    utils.set(el, { x: '108%' });
+    tl.add(el, { x: '0%', duration: 1000 }, 120 + k * 140);
+  });
+  s.querySelectorAll('.anim-num').forEach(el => {
+    utils.set(el, { y: 340, opacity: 0 });
+    tl.add(el, { y: 0, opacity: 0.92, duration: 1300, ease: 'out(4)' }, 0);
+  });
+  const words = s.querySelectorAll('.anim-word');
+  if (words.length) {
+    words.forEach((el, k) => {
+      const o = WORD_SCATTER[k % WORD_SCATTER.length];
+      utils.set(el, { x: o.x, y: o.y, rotate: o.r, opacity: 0 });
+    });
+    tl.add(words, { x: 0, y: 0, rotate: 0, opacity: 1, duration: 1100, delay: stagger(90) }, 0);
+  }
+  const fades = s.querySelectorAll('.anim-fade');
+  if (fades.length) {
+    utils.set(fades, { opacity: 0 });
+    tl.add(fades, { opacity: 1, duration: 700, delay: stagger(90) }, 700);
+  }
+}
+
+let cur = -1;
+function show(i, dir = 1) {
+  if (i < 0 || i >= slides.length || i === cur) return;
+  const prev = cur; cur = i;
+  const nxt = slides[i];
+  const out = prev >= 0 ? slides[prev] : null;
+  utils.remove(slides); // cancel any in-flight slide transition
+  slides.forEach(s => {
+    if (s !== nxt && s !== out) { s.classList.remove('active'); utils.set(s, { x: 0, opacity: 1 }); revertTl(s); }
+  });
+  nxt.classList.add('active');
+  if (out) {
+    animate(out, { x: -40 * dir, opacity: 0, duration: 380, ease: 'inOutQuart',
+      onComplete: () => { out.classList.remove('active'); utils.set(out, { x: 0, opacity: 1 }); revertTl(out); } });
+    utils.set(nxt, { x: 60 * dir, opacity: 0 });
+    animate(nxt, { x: 0, opacity: 1, duration: 440, ease: 'inOutQuart' });
+  }
+  history.replaceState(null, '', '#' + i);
+  if (dir > 0 || !out) playSlide(i);  // entrance choreography only plays moving forward
+  else revertTl(nxt);                 // going back lands on the finished slide, no replay
+}
+
+if (PRINT) {
+  document.body.classList.add('print');
+  slides.forEach(s => s.classList.add('active'));
+} else {
+  addEventListener('keydown', e => {
+    if (e.repeat) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') show(cur + 1, 1);
+    if (e.key === 'ArrowLeft') show(cur - 1, -1);
+  });
+  show(Math.min(Math.max(parseInt(location.hash.slice(1)) || 0, 0), slides.length - 1));
+}
+</script>
+</body>
+</html>

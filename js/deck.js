@@ -30,14 +30,16 @@ const SCENES = {
     },
   },
 
-  flood: { // color exercise: full-bleed color, brand card on presenter beat
+  palette: { // color exercise: tiles land, promised meanings on presenter beat
     steps: 1,
     enter(s, tl, hold) {
-      const panel = s.querySelector('.reveal-panel');
-      utils.set(panel, { opacity: 0, y: 34 });
+      const tiles = s.querySelectorAll('.ptile');
+      utils.set(tiles, { opacity: 0, y: 26 });
+      utils.set(s.querySelectorAll('.pvals'), { opacity: 0 });
+      tl.add(tiles, { opacity: 1, y: 0, duration: 620, delay: stagger(75) }, hold + 150);
     },
     step(s) {
-      animate(s.querySelector('.reveal-panel'), { opacity: 1, y: 0, duration: 750, ease: WEIGHTY });
+      animate(s.querySelectorAll('.pvals'), { opacity: .92, duration: 550, delay: stagger(65), ease: WEIGHTY });
     },
   },
 
@@ -68,32 +70,6 @@ const SCENES = {
     },
   },
 
-  melt: { // Milka: chocolate pours down the lilac, then the name surfaces
-    steps: 1,
-    enter(s, tl, hold) {
-      utils.set(s.querySelector('.reveal-panel'), { opacity: 0, y: 34 });
-      utils.set(s.querySelector('.melt .pool'), { scaleY: 0 });
-      utils.set(s.querySelectorAll('.melt .drip'), { scaleY: 0 });
-    },
-    step(s) {
-      const mtl = createTimeline({ defaults: { ease: WEIGHTY } });
-      s._meltTl = mtl;
-      mtl.add(s.querySelector('.melt .pool'), { scaleY: 1, duration: 450 }, 0);
-      s.querySelectorAll('.melt .drip').forEach((d, k) =>
-        mtl.add(d, { scaleY: 1, duration: 1250 + (k % 3) * 380 }, 150 + (k % 4) * 110));
-      s.querySelectorAll('.melt .droplet').forEach((p, k) => {
-        mtl.add(p, { opacity: [0, 1], duration: 160 }, 1250 + k * 300);
-        mtl.add(p, { y: '64vh', opacity: 0, duration: 950, ease: 'in(3)' }, 1400 + k * 300);
-      });
-      mtl.add(s.querySelector('.reveal-panel'), { opacity: 1, y: 0, duration: 750 }, 2250);
-    },
-    clean(s) {
-      if (s._meltTl) { s._meltTl.cancel(); s._meltTl = null; }
-      s.querySelectorAll('.melt .droplet').forEach(p => {
-        p.style.removeProperty('transform'); p.style.removeProperty('opacity');
-      });
-    },
-  },
 
   typed: { // the question types itself
     enter(s, tl, hold) {
@@ -271,7 +247,7 @@ const SCENES = {
 
 /* ---------- engine ---------- */
 const slideTls = new Map();
-const STAGED = '.anim-rise,.anim-fade,.anim-rule,.frame,.sig,.reveal-panel,.beam,.runner,.blob,.break-cap,.stack .layer,.pipe .stage,.pipe .link,.h-loud,.h-calm,.h-mono span,.h-air,.breakrow,.pcard,.plink,.tok,.melt .pool,.melt .drip,.melt .droplet,.lens,.lens-copy,.check,.specimen,.rig-frame,.crack';
+const STAGED = '.anim-rise,.anim-fade,.anim-rule,.frame,.sig,.reveal-panel,.beam,.runner,.blob,.break-cap,.stack .layer,.pipe .stage,.pipe .link,.h-loud,.h-calm,.h-mono span,.h-air,.breakrow,.pcard,.plink,.tok,.ptile,.pvals,.lens,.lens-copy,.check,.specimen,.rig-frame,.crack';
 
 function sceneOf(s) { return SCENES[s.dataset.scene] || null; }
 

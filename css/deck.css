@@ -59,11 +59,16 @@ body {
 /* ---------- chapter cards ---------- */
 .chapter .num { font-weight: 900; font-stretch: 125%; font-size: 5vw; line-height: 1; color: var(--purple); margin-bottom: 3.5vh; }
 .chapter .one-liner { margin-top: 4.5vh; }
-.cursor {
-  display: inline-block; width: .85vw; height: 1.9vw; background: var(--ink);
-  margin-left: .5vw; vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite;
+
+/* ---------- first principles: spec slides (headline left, prompt sample right) ---------- */
+.fp-row { display: flex; align-items: center; gap: 4vw; max-width: 82vw; text-align: left; }
+.fp-copy { flex: 1 1 0; }
+.spec-snip {
+  flex: 0 0 32vw; font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: .8vw; line-height: 1.95; white-space: pre;
+  border: 1px solid var(--hair); padding: 2.4vh 1.7vw; opacity: .88;
 }
-@keyframes blink { 50% { opacity: 0; } }
+.spec-snip b { color: var(--purple); font-weight: 700; }
 
 /* ---------- word-reveal exercise ---------- */
 .reveal .word { margin-bottom: 4vh; }
@@ -92,6 +97,9 @@ body {
   padding: 2vw 3vw; display: flex; align-items: center; justify-content: center;
 }
 .brandcard img { height: 6.4vw; width: auto; max-width: 26vw; display: block; }
+.shipped-row { display: flex; gap: 2vw; align-items: stretch; }
+.brandcard.shipped { background: #fff; } /* the images' own ground; bone would show a seam */
+.brandcard.shipped img { height: 10vw; max-width: 24vw; object-fit: contain; }
 .brandcard .brandname { font-weight: 900; font-stretch: 115%; text-transform: uppercase; letter-spacing: -0.01em; font-size: 4.6vw; line-height: 1; color: var(--black); }
 .chips { display: flex; align-items: center; gap: .9vw; list-style: none; flex-wrap: wrap; justify-content: center; }
 .chips-label { font-size: .72vw; font-weight: 600; letter-spacing: .35em; text-transform: uppercase; opacity: .5; margin-right: .6vw; }
@@ -131,21 +139,41 @@ body {
 .race .aa { font-weight: 900; font-stretch: 115%; font-size: 3.4vw; line-height: 1; }
 .race .wordy { font-weight: 480; font-size: 1.5vw; opacity: .8; }
 
-/* ---------- converge (signals point at the sentence) ---------- */
-.conv { position: relative; width: 56vw; height: 46vh; margin-bottom: 4vh; }
-.conv .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.4vh; }
-.conv .csig { position: absolute; display: flex; align-items: center; justify-content: center; }
-.conv .csig.p1 { top: 0; left: 6%; } .conv .csig.p2 { top: 0; right: 6%; }
-.conv .csig.p3 { bottom: 0; left: 6%; } .conv .csig.p4 { bottom: 0; right: 6%; }
-.conv .csig .sq { width: 3.2vw; height: 3.2vw; background: var(--purple); }
-.conv .csig .glyph { font-size: 3vw; font-weight: 900; font-stretch: 115%; }
-.conv .csig .dot { width: 3.2vw; height: 3.2vw; border-radius: 50%; background: var(--ink); }
-.conv .csig .bar { width: 3.6vw; height: .5vw; background: var(--ink); }
-.conv .beam { position: absolute; height: 1px; background: var(--hair); }
-.conv .beam.b1 { top: 16%; left: 14%; width: 26%; transform-origin: left center; }
-.conv .beam.b2 { top: 16%; right: 14%; width: 26%; transform-origin: right center; }
-.conv .beam.b3 { bottom: 16%; left: 14%; width: 26%; transform-origin: left center; }
-.conv .beam.b4 { bottom: 16%; right: 14%; width: 26%; transform-origin: right center; }
+/* ---------- consistency & contradiction: four deliberate failures ---------- */
+/* Each mock breaks its own claim on purpose; system fonts (Comic Sans, Georgia)
+   ARE the gag — do not "fix" them to Archivo. */
+.contra-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; width: 86vw; }
+.contra-card { display: flex; flex-direction: column; gap: .9vh; text-align: left; }
+.cc-claim, .cc-bug { font-size: .72vw; letter-spacing: .28em; text-transform: uppercase; font-weight: 600; }
+.cc-claim { opacity: .6; }
+.cc-claim b { color: var(--purple); }
+.cc-bug { font-weight: 700; color: #C81E1E; }
+.cc-mock {
+  height: 28vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.2vh; padding: 1vw; position: relative; overflow: hidden; text-align: center;
+}
+.cc-hostile { background: #111; }
+.cc-hostile .cc-brand { font-weight: 900; font-stretch: 62%; font-size: 2.6vw; letter-spacing: -.05em; color: #fff; }
+.cc-hostile .cc-tag { font-weight: 800; font-size: .78vw; color: #fff; }
+.cc-toy { background: linear-gradient(160deg, #FFD9EC, #D9F6FF); border-radius: 2.2vw; }
+.cc-toy .cc-brand { font-family: "Comic Sans MS", "Segoe Print", cursive; font-size: 2vw; color: #E858A8; text-shadow: 2px 2px 0 #fff; }
+.cc-toy .cc-tag { font-family: "Comic Sans MS", "Segoe Print", cursive; font-size: .85vw; color: #4AA3C7; }
+.cc-flyer { background: linear-gradient(135deg, #00E5FF, #FF00D4 55%, #FFEA00); }
+.cc-flyer .cc-brand { font-family: Georgia, "Times New Roman", serif; font-size: 2.4vw; color: #FFF200; letter-spacing: .12em; text-shadow: 2px 2px 4px rgba(0,0,0,.65), 0 0 14px #fff; }
+.cc-flyer .cc-tag { font-family: Georgia, serif; font-style: italic; font-size: .9vw; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,.6); }
+.cc-noise {
+  background: repeating-linear-gradient(45deg, transparent 0 14px, rgba(124,58,237,.12) 14px 16px), #fff;
+  border: 3px dashed #F97316;
+}
+.cc-noise .cc-brand { font-weight: 480; font-size: 1.9vw; letter-spacing: .04em; }
+.cc-noise .cc-tag { font-size: .8vw; opacity: .7; }
+.cc-burst {
+  position: absolute; font-weight: 900; font-size: .8vw; padding: .5vw .6vw;
+  border-radius: 50%; border: 2px solid #141414; transform: rotate(-14deg);
+}
+.cc-burst.b1 { top: 6%; left: 8%; background: #FF3DBE; color: #fff; }
+.cc-burst.b2 { top: 10%; right: 7%; background: #FFD400; transform: rotate(11deg); }
+.cc-burst.b3 { bottom: 8%; left: 12%; background: #22C55E; color: #fff; transform: rotate(-7deg); }
 
 /* ---------- hello (typography is a voice) ---------- */
 .hellos { display: grid; grid-template-columns: 1fr 1fr; gap: 6vh 8vw; margin-bottom: 5vh; }
@@ -158,12 +186,6 @@ body {
 .hello .h-air  { font-weight: 300; font-size: 2.6vw; text-transform: uppercase; letter-spacing: .55em; }
 
 /* ---------- lists (prompts map, rules, conditions) ---------- */
-.rows { display: flex; flex-direction: column; gap: 3vh; max-width: 58vw; text-align: left; }
-.rows .row { display: flex; align-items: baseline; gap: 1.6vw; }
-.rows .k { font-weight: 900; font-stretch: 115%; text-transform: uppercase; font-size: 1.6vw; flex: none; min-width: 12vw; }
-.rows .v { font-weight: 480; font-size: 1.15vw; line-height: 1.5; opacity: .62; }
-.rows .mark { font-weight: 900; font-size: 1.6vw; flex: none; width: 2vw; }
-.rows .mark.no { opacity: .45; } .rows .mark.yes { color: var(--purple); }
 
 /* ---------- breakit (one wrong signal) ---------- */
 .breakrow { display: flex; gap: 2.4vw; margin-bottom: 5.5vh; }
@@ -217,13 +239,6 @@ body {
 .crack.c1 { width: 15vw; height: 1px; transform: rotate(38deg); }
 .crack.c2 { width: 10vw; height: 1px; transform: rotate(-52deg) translate(2vw, 3vh); }
 
-/* ---------- gift ---------- */
-.qr-ph {
-  width: 11vw; height: 11vw; border: 1px dashed var(--hair); margin-top: 4vh;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .75vw; font-weight: 600; letter-spacing: .35em; opacity: .5;
-}
-
 /* ---------- chat participation cue ---------- */
 #chatcue {
   position: fixed; left: 50%; bottom: 9vh; z-index: 4;
@@ -259,12 +274,6 @@ body.print #chatcue { display: none; }
   position: absolute; left: 0; top: 50%; width: .8vw; height: .8vw; margin-top: -.4vw;
   border-radius: 50%; background: var(--purple); opacity: 0; /* CSS final: gone */
 }
-
-/* compact ledger for real outputs */
-.rows.compact { gap: 2vh; max-width: 62vw; }
-.rows.compact .k { font-size: 1vw; min-width: 8.5vw; }
-.rows.compact .v { font-size: .92vw; }
-.rows.compact .k .pn { color: var(--purple); margin-right: .5vw; }
 
 /* ---------- prompts appendix + sneak-peek links ---------- */
 .applink {

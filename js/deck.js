@@ -71,22 +71,6 @@ const SCENES = {
   },
 
 
-  typed: { // the question types itself
-    enter(s, tl, hold) {
-      const el = s.querySelector('.typed');
-      if (!el.dataset.full) el.dataset.full = el.textContent;
-      const full = el.dataset.full;
-      el.textContent = '';
-      const p = { n: 0 };
-      tl.add(p, { n: full.length, duration: full.length * 34, ease: 'linear',
-        onUpdate: () => { el.textContent = full.slice(0, Math.round(p.n)); } }, hold + 300);
-    },
-    clean(s) {
-      const el = s.querySelector('.typed');
-      if (el.dataset.full) el.textContent = el.dataset.full;
-    },
-  },
-
   signals: { // scatter → snap
     enter(s, tl, hold) {
       const sigs = s.querySelectorAll('.sig');
@@ -112,11 +96,16 @@ const SCENES = {
     },
   },
 
-  converge: { // hairlines draw from the signals toward the sentence
+  bugs: { // contradiction specimens land, diagnoses on the presenter beat
+    steps: 1,
     enter(s, tl, hold) {
-      const beams = s.querySelectorAll('.beam');
-      utils.set(beams, { scaleX: 0 });
-      tl.add(beams, { scaleX: 1, duration: 900, delay: stagger(120) }, hold + 700);
+      const cards = s.querySelectorAll('.contra-card');
+      utils.set(cards, { opacity: 0, y: 26 });
+      utils.set(s.querySelectorAll('.cc-bug'), { opacity: 0 });
+      tl.add(cards, { opacity: 1, y: 0, duration: 620, delay: stagger(110) }, hold + 150);
+    },
+    step(s) {
+      animate(s.querySelectorAll('.cc-bug'), { opacity: 1, duration: 500, delay: stagger(90), ease: WEIGHTY });
     },
   },
 
@@ -247,7 +236,7 @@ const SCENES = {
 
 /* ---------- engine ---------- */
 const slideTls = new Map();
-const STAGED = '.anim-rise,.anim-fade,.anim-rule,.frame,.sig,.reveal-panel,.beam,.runner,.blob,.break-cap,.stack .layer,.pipe .stage,.pipe .link,.h-loud,.h-calm,.h-mono span,.h-air,.breakrow,.pcard,.plink,.tok,.ptile,.pvals,.lens,.lens-copy,.check,.specimen,.rig-frame,.crack';
+const STAGED = '.anim-rise,.anim-fade,.anim-rule,.frame,.sig,.reveal-panel,.runner,.blob,.break-cap,.stack .layer,.pipe .stage,.pipe .link,.h-loud,.h-calm,.h-mono span,.h-air,.breakrow,.pcard,.plink,.tok,.ptile,.pvals,.contra-card,.cc-bug,.lens,.lens-copy,.check,.specimen,.rig-frame,.crack';
 
 function sceneOf(s) { return SCENES[s.dataset.scene] || null; }
 

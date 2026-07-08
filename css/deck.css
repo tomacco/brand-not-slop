@@ -199,10 +199,10 @@ body {
 
 /* ---------- Claw'd cameo, Search slide (rig: assets/mascot/mascot.js) ---------- */
 .cameo-holder {
-  position: absolute; right: 24vw; bottom: 0; width: 9vw; z-index: 3;
-  overflow: hidden; pointer-events: none;
+  position: absolute; right: 24vw; bottom: 0; width: 8vw; z-index: 3;
+  pointer-events: none; /* body overflow:hidden clips the tucked-away state */
 }
-.cameo-holder svg { display: block; width: 100%; height: auto; }
+.cameo-holder svg { display: block; width: 100%; height: auto; overflow: visible; }
 
 /* ---------- stress test (scene=stress; CSS final = all checks passed, specimen intact) ---------- */
 .stress { display: flex; align-items: center; gap: 5vw; margin-bottom: 3vh; }

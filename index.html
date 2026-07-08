@@ -153,32 +153,24 @@
     </ul>
   </div>
   <div class="cameo-holder" aria-hidden="true">
-    <!-- Claw'd cameo — original homage artwork, not official Anthropic assets -->
-    <svg id="deck-clawd" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Claw'd cameo">
-      <ellipse data-mascot-shadow="" cx="100" cy="176" rx="46" ry="5" style="fill:#000;opacity:.35"/>
+    <!-- Claw'd cameo — pixel grid after Suan Kim's pen (codepen.io/raspberrypi13-rgb/pen/jEVLMGR);
+         12px units: 60×36 body, 12×12 claws, four 6×12 legs, 6×12 rect eyes -->
+    <svg id="deck-clawd" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 68" shape-rendering="crispEdges" role="img" aria-label="Claw'd cameo">
+      <rect data-mascot-shadow="" x="14" y="62" width="56" height="4" style="fill:#000;opacity:.35"/>
       <g data-mascot-body="">
+        <rect x="0" y="24" width="12" height="12" style="fill:#D77F66"/>
+        <rect x="72" y="24" width="12" height="12" style="fill:#D77F66"/>
         <g data-mascot-leg="left">
-          <path d="M62 126 Q46 122 40 112" style="fill:none;stroke:#D97757;stroke-width:8;stroke-linecap:round"/>
-          <circle cx="38" cy="102" r="15" style="fill:#D97757"/>
-          <path d="M38 102 L20 92 L25 110 Z" style="fill:var(--black,#141414)"/>
+          <rect x="18" y="48" width="6" height="12" style="fill:#D77F66"/>
+          <rect x="30" y="48" width="6" height="12" style="fill:#D77F66"/>
         </g>
         <g data-mascot-leg="right">
-          <path d="M138 126 Q154 122 160 112" style="fill:none;stroke:#D97757;stroke-width:8;stroke-linecap:round"/>
-          <circle cx="162" cy="102" r="15" style="fill:#D97757"/>
-          <path d="M162 102 L180 92 L175 110 Z" style="fill:var(--black,#141414)"/>
+          <rect x="48" y="48" width="6" height="12" style="fill:#D77F66"/>
+          <rect x="60" y="48" width="6" height="12" style="fill:#D77F66"/>
         </g>
-        <rect x="78" y="152" width="14" height="18" rx="6" style="fill:#D97757;filter:brightness(.8)"/>
-        <rect x="108" y="152" width="14" height="18" rx="6" style="fill:#D97757;filter:brightness(.8)"/>
-        <path d="M100 78 C 140 78 154 104 152 130 C 150 152 128 164 100 164 C 72 164 50 152 48 130 C 46 104 60 78 100 78 Z" style="fill:#D97757"/>
-        <g data-mascot-eye="left">
-          <ellipse cx="81" cy="112" rx="10" ry="12" style="fill:#FFF8F0"/>
-          <circle data-mascot-pupil="" cx="81" cy="113" r="4" style="fill:#201510"/>
-        </g>
-        <g data-mascot-eye="right">
-          <ellipse cx="119" cy="112" rx="10" ry="12" style="fill:#FFF8F0"/>
-          <circle data-mascot-pupil="" cx="119" cy="113" r="4" style="fill:#201510"/>
-        </g>
-        <path data-mascot-mouth="" d="M92 136 Q100 143 108 136" style="fill:none;stroke:#201510;stroke-width:3;stroke-linecap:round"/>
+        <rect x="12" y="12" width="60" height="36" style="fill:#D77F66"/>
+        <rect data-mascot-eye="left" x="24" y="24" width="6" height="12" style="fill:#1A1A1A"/>
+        <rect data-mascot-eye="right" x="54" y="24" width="6" height="12" style="fill:#1A1A1A"/>
       </g>
     </svg>
   </div>

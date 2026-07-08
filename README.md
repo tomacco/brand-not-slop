@@ -28,4 +28,4 @@ printing to PDF.
 - Type: [Archivo](https://fonts.google.com/specimen/Archivo) (SIL OFL, license included)
 - Animation: [anime.js](https://animejs.com/) (MIT), [GSAP](https://gsap.com/) (Webflow/GreenSock license)
 - Brand logos appear nominatively as workshop examples and belong to their owners
-- The crab cameo is original homage artwork, not an official Anthropic asset
+- The pixel Claw'd cameo follows [Suan Kim's CodePen](https://codepen.io/raspberrypi13-rgb/pen/jEVLMGR); not an official Anthropic asset

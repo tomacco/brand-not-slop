@@ -369,11 +369,11 @@ slides.forEach((s, i) => s.querySelectorAll('.count').forEach(c => {
   c.textContent = String(i + 1).padStart(2, '0') + ' / ' + slides.length;
 }));
 
-/* Claw'd cameo on the Search slide (GSAP rig; original homage artwork) */
+/* Claw'd cameo on the Search slide (GSAP rig; pixel art after Suan Kim's pen) */
 let clawd = null, clawdTimers = [];
 const clawdSvg = document.getElementById('deck-clawd');
 if (!PRINT && window.Mascot && clawdSvg) {
-  clawd = Mascot.create('#deck-clawd', { eyeRadius: 4, jumpHeight: 26 });
+  clawd = Mascot.create('#deck-clawd', { jumpHeight: 22 });
   gsap.set(clawdSvg, { yPercent: 112 }); // anime.js maps y to the SVG attribute, so the peek runs on gsap
 } else if (clawdSvg) {
   clawdSvg.closest('.cameo-holder').style.display = 'none';
@@ -382,11 +382,11 @@ function clawdCameo() {
   if (!clawd) return;
   clawdTimers.forEach(clearTimeout); clawdTimers = [];
   clawd.setState('excited');
-  gsap.to(clawdSvg, { yPercent: 14, duration: .7, ease: 'back.out(1.4)' });
+  gsap.to(clawdSvg, { yPercent: 10, duration: .7, ease: 'steps(7)' }); // pixel-y rise
   clawdTimers.push(setTimeout(() => clawd.jump(), 1900));
   clawdTimers.push(setTimeout(() => {
     clawd.setState('idle');
-    gsap.to(clawdSvg, { yPercent: 112, duration: .6, ease: 'back.in(1.2)' });
+    gsap.to(clawdSvg, { yPercent: 112, duration: .5, ease: 'steps(5)' });
   }, 5200));
 }
 
